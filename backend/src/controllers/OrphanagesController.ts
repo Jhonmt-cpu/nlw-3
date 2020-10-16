@@ -5,6 +5,17 @@ import orphanageView from '../views/orphanages_view';
 
 import Orphanage from '../models/Orphanage';
 
+interface OrphanageRequest {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: boolean | string;
+}
+
 export default {
   async index(request: Request, response: Response): Promise<Response> {
     const orphanagesRepository = getRepository(Orphanage);
@@ -37,7 +48,7 @@ export default {
       instructions,
       opening_hours,
       open_on_weekends,
-    } = <Orphanage>request.body;
+    } = <OrphanageRequest>request.body;
 
     const orphanagesRepository = getRepository(Orphanage);
 
@@ -53,7 +64,7 @@ export default {
       about,
       instructions,
       opening_hours,
-      open_on_weekends,
+      open_on_weekends: open_on_weekends === 'true',
       images,
     };
 
@@ -72,7 +83,7 @@ export default {
       ),
     });
 
-    await schema.validate(data, {
+    const finalData = await schema.validate(data, {
       abortEarly: false,
     });
 

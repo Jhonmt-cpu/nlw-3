@@ -42,7 +42,9 @@
         }
       ],
       "no-use-before-define": "off",
-      "prettier/prettier": "error"
+      "prettier/prettier": "error",
+      "jsx-a11y/label-has-associated-control": "off",
+      "camelcase":"off"
     },
     "settings": {
       "import/resolver": {
